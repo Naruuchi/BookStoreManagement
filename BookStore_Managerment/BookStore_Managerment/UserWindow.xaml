@@ -1,0 +1,93 @@
+﻿<Window x:Class="BookStore_Managerment.UserWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore_Managerment"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:BookStore_Managerment.UserControl352"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource UserVM}"
+      
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        
+        Name="window"
+        
+        Title="Người Dùng" Height="550" Width="800">
+
+    <Grid Background="RosyBrown">
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="LightBlue"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=window}"></uc:ControlBarUC>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Margin="5" Grid.Row="0" Background="WhiteSmoke">
+                <WrapPanel Margin="0 0 0 7">
+                    <TextBox Text="{Binding DisplayName}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Tên Hiển Thị" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding Username}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Tên Đăng Nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <ComboBox Margin="5 5 15 -6" DisplayMemberPath="Role" materialDesign:HintAssist.Hint="Role" ItemsSource="{Binding List}" SelectedItem="{Binding SelectedRole, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                    <TextBox Text="{Binding Password}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Mật Khẩu" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                </WrapPanel>
+            </materialDesign:Card>
+
+            <!--Function button-->
+            <materialDesign:Card Margin="5" Grid.Row="1" Background="WhiteSmoke">
+                <Grid>
+                    <WrapPanel>
+                        <Button Command="{Binding AddCommand, UpdateSourceTrigger=PropertyChanged}" Content="Thêm" Margin="5" Width="120" Height="50"></Button>
+                        <Button Command="{Binding EditCommand, UpdateSourceTrigger=PropertyChanged}" Content="Sửa" Margin="5" Width="120" Height="50"></Button>
+                        <Button Command="{Binding DeleteCommand, UpdateSourceTrigger=PropertyChanged}" Content="Xóa" Margin="5" Width="120" Height="50"></Button>
+                    </WrapPanel>
+                </Grid>
+            </materialDesign:Card>
+            
+            <!--Display-->
+            <materialDesign:Card Margin="5" Grid.Row="2" Background="WhiteSmoke">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}"></GridViewColumn>
+                                <GridViewColumn Header="Tên Hiển Thị" DisplayMemberBinding="{Binding DisplayName}"></GridViewColumn>
+                                <GridViewColumn Header="Tên Đăng Nhập" DisplayMemberBinding="{Binding Username}"></GridViewColumn>
+                                <GridViewColumn Header="Quyền" DisplayMemberBinding="{Binding Role}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

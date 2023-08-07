@@ -1,0 +1,97 @@
+﻿<Window x:Class="BookStore_Managerment.InputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BookStore_Managerment"
+        mc:Ignorable="d"
+        
+        xmlns:uc="clr-namespace:BookStore_Managerment.UserControl352"
+        
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        DataContext="{StaticResource InputVM}"
+        
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        
+        Name="window"
+        
+        Title="Nhập Kho" Height="550" Width="800">
+
+    <Grid Background="RosyBrown">
+        <Grid.Resources>
+            <Style TargetType="Button">
+                <Setter Property="Background" Value="LightBlue"></Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <uc:ControlBarUC Tag="{Binding Title, ElementName=window}"></uc:ControlBarUC>
+        </Grid>
+
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition Height="auto"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <materialDesign:Card Margin="5" Padding="3" Grid.Row="0" Background="WhiteSmoke">
+                <WrapPanel  Margin="0 0 0 7">
+                    <TextBox Text="{Binding DisplayName, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Tên Sách" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding Amount, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Số Lượng" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <ComboBox DisplayMemberPath="DisplayName" ItemsSource="{Binding Suplier}" SelectedItem="{Binding SelectedSuplier, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" Margin="5 5 10 -5.1" materialDesign:ComboBoxAssist.MaxLength="2" materialDesign:HintAssist.Hint="Nhà Cung Cấp" IsEditable="True"></ComboBox>
+                    <TextBox Text="{Binding InputPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Giá Nhập" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <TextBox Text="{Binding OutputPrice, UpdateSourceTrigger=PropertyChanged}" Margin="5 5 15 5" VerticalAlignment="Center" materialDesign:HintAssist.Hint="Giá Xuất" Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    <DatePicker SelectedDate="{Binding DateInput}" Margin="5 5 5 -7"  Width="100" materialDesign:HintAssist.Hint="Ngày Nhập" materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                </WrapPanel>
+            </materialDesign:Card>
+
+            <!--Function button-->
+            <materialDesign:Card Margin="5" Grid.Row="1" Background="WhiteSmoke">
+                <Grid>
+                    <WrapPanel>
+                        <Button Command="{Binding AddCommand}" Content="Thêm" Margin="5" Width="120" Height="50"></Button>
+                        <Button Command="{Binding EditCommand}" Content="Sửa" Margin="5" Width="120" Height="50"></Button>
+                        <Button Command="{Binding DeleteCommand}" Content="Xóa" Margin="5" Width="120" Height="50"></Button>
+                    </WrapPanel>
+                </Grid>
+            </materialDesign:Card>
+
+            <!--Display-->
+            <materialDesign:Card Margin="5" Grid.Row="2" Background="WhiteSmoke">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <ListView ItemsSource="{Binding List}" SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Tên Hiển Thị" DisplayMemberBinding="{Binding Book.DisplayName}"></GridViewColumn>
+                                <GridViewColumn Header="Số Lượng" DisplayMemberBinding="{Binding Amount}"></GridViewColumn>
+                                <GridViewColumn Header="Nhà Cung Cấp" DisplayMemberBinding="{Binding Book.Suplier.DisplayName}"></GridViewColumn>
+                                <GridViewColumn Header="Ngày Nhập" DisplayMemberBinding="{Binding DateInput}"></GridViewColumn>
+                                <GridViewColumn Header="Giá Nhập" DisplayMemberBinding="{Binding InputPrice}"></GridViewColumn>
+                                <GridViewColumn Header="Giá Xuất" DisplayMemberBinding="{Binding OutputPrice}"></GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </ScrollViewer>
+            </materialDesign:Card>
+        </Grid>
+    </Grid>
+</Window>

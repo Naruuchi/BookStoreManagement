@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="BookStore_Managerment.UserControl352.ControlBarUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BookStore_Managerment.UserControl352"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             
+             Name="ucControlBar"
+             mc:Ignorable="d">
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding MouseMoveWindowCommand}" CommandParameter="{Binding ElementName=ucControlBar}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <materialDesign:ColorZone
+             materialDesign:ElevationAssist.Elevation="Dp4"
+             ClipToBounds="False"
+             Background="SaddleBrown"
+             Mode="PrimaryLight">
+
+            <DockPanel >
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Background="Transparent" >
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="40"/>
+                            <Setter Property="Margin" Value="2 4 3 4"/>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Command="{Binding MinimizeWindowCommand}"
+                            CommandParameter="{Binding ElementName=ucControlBar}"
+                        ToolTip="Đóng" ToolBar.OverflowMode="AsNeeded" Background="LightGray">
+                        <materialDesign:PackIcon Kind="WindowMinimize" />
+                    </Button>
+                    <Button Command="{Binding MaximizeWindowCommand}"
+                            CommandParameter="{Binding ElementName=ucControlBar}"
+                        ToolTip="Đóng" ToolBar.OverflowMode="AsNeeded" Background="LightGray">
+                        <materialDesign:PackIcon Kind="WindowMaximize" />
+                    </Button>
+                    <Button Command="{Binding CloseWindowCommand}"
+                            CommandParameter="{Binding ElementName=ucControlBar}"
+                        ToolTip="Đóng" ToolBar.OverflowMode="AsNeeded" Background="Firebrick">
+                        <materialDesign:PackIcon Kind="WindowClose" />
+                    </Button>
+                </StackPanel>
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" />
+                <TextBlock  Margin="16,0,0,0"  VerticalAlignment="Center" Text="{Binding Tag, ElementName=ucControlBar}" />
+            </StackPanel>
+        </DockPanel>
+        </materialDesign:ColorZone>
+    </Grid>
+</UserControl>
